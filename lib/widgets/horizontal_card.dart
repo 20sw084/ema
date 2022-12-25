@@ -1,3 +1,4 @@
+import 'package:ema/screens/add_screen.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalCard extends StatefulWidget {
@@ -12,38 +13,48 @@ class _HorizontalCardState extends State<HorizontalCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width - 16,
         height: 150,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
+              decoration: BoxDecoration(
+                color: Colors.greenAccent,
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text("Income", style: textStyle(context),),
                   Text("10000 PKR", style: priceTextStyle(context),),
-                  Icon(Icons.add_circle_outline_rounded,color: Colors.white,),
+                  GestureDetector(
+                    child: const Icon(Icons.add_circle_outline_rounded,color: Colors.white,),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AddScreen(),),);
+                    },
+                  ),
                 ],
-              ),
-              decoration: BoxDecoration(
-                color: Colors.greenAccent,
-                borderRadius: BorderRadius.circular(30),
               ),
             ),
             Container(
+              decoration: BoxDecoration(
+                color: Colors.deepOrangeAccent,
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text("Expense", style: textStyle(context),),
                   Text("10000 PKR", style: priceTextStyle(context),),
-                  Icon(Icons.add_circle_outline_rounded,color: Colors.white,),
+                  GestureDetector(
+                    child: const Icon(Icons.add_circle_outline_rounded,color: Colors.white,),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AddScreen(),),);
+                    },
+                  ),
                 ],
-              ),
-              decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
-                borderRadius: BorderRadius.circular(30),
               ),
             ),
           ],
@@ -60,7 +71,7 @@ static TextStyle textStyle (BuildContext context){
 }
 
 static TextStyle priceTextStyle (BuildContext context){
-  return TextStyle(
+  return const TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 30,
