@@ -18,28 +18,35 @@ class _AddScreenState extends State<AddScreen> {
     return Scaffold(
       appBar: AppBar(title: Text("Add"),),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: TextField(
-                    controller: null,
-                      decoration: InputDecoration(
-                        labelText: "Name",
-                        hintText: "Name",
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                  controller: null,
+                    decoration: InputDecoration(
+                      labelText: "Name",
+                      hintText: "Name",
+                      enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3, color: Colors.pink,
                       ),
+                        borderRadius : BorderRadius.all(Radius.circular(30.0)),
+                    ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             child: Row(
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: const [
                 Expanded(
                   child: Padding(
@@ -49,6 +56,12 @@ class _AddScreenState extends State<AddScreen> {
                       decoration: InputDecoration(
                         labelText: "Amount",
                         hintText: "Amount",
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Colors.pink,
+                          ),
+                          borderRadius : BorderRadius.all(Radius.circular(30.0)),
+                        ),
                       ),
                     ),
                   ),
