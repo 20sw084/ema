@@ -1,4 +1,4 @@
-import 'package:ema/dashboard.dart';
+import 'package:ema/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
