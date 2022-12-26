@@ -20,12 +20,10 @@ class _AddScreenState extends State<AddScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Expanded(
-                child: Padding(
+          Expanded(
+            child: Column(
+              children: [
+                const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: TextField(
                   controller: null,
@@ -41,65 +39,56 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: TextField(
-                      controller: null,
-                      decoration: InputDecoration(
-                        labelText: "Amount",
-                        hintText: "Amount",
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3, color: Colors.pink,
-                          ),
-                          borderRadius : BorderRadius.all(Radius.circular(30.0)),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: null,
+                    decoration: InputDecoration(
+                      labelText: "Amount",
+                      hintText: "Amount",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 3, color: Colors.pink,
                         ),
+                        borderRadius : BorderRadius.all(Radius.circular(30.0)),
                       ),
                     ),
                   ),
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('Income'),
+                        leading: Radio(
+                          value: AmountType.income,
+                          groupValue: _type,
+                          onChanged: (value) {
+                            setState(() {
+                              _type = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('Expense'),
+                        leading: Radio(
+                          value: AmountType.expense,
+                          groupValue: _type,
+                          onChanged: (value) {
+                            setState(() {
+                              _type = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: ListTile(
-                  title: const Text('Income'),
-                  leading: Radio(
-                    value: AmountType.income,
-                    groupValue: _type,
-                    onChanged: (value) {
-                      setState(() {
-                        _type = value!;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListTile(
-                title: const Text('Expense'),
-                leading: Radio(
-                  value: AmountType.expense,
-                  groupValue: _type,
-                  onChanged: (value) {
-                    setState(() {
-                      _type = value!;
-                    });
-                  },
-                ),
-              ),
-              ),
-            ],
           ),
         ],
       ),
