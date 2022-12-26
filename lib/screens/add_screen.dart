@@ -16,9 +16,8 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add"),),
+      appBar: AppBar(title: const Text("Add"),),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -28,7 +27,7 @@ class _AddScreenState extends State<AddScreen> {
                   child: TextField(
                   controller: null,
                     decoration: InputDecoration(
-                      labelText: "Name",
+                      labelText: "Name*",
                       hintText: "Name",
                       enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -44,7 +43,7 @@ class _AddScreenState extends State<AddScreen> {
                   child: TextField(
                     controller: null,
                     decoration: InputDecoration(
-                      labelText: "Amount",
+                      labelText: "Amount*",
                       hintText: "Amount",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -86,6 +85,41 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ),
                   ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: null,
+                    decoration: InputDecoration(
+                      labelText: "Description",
+                      hintText: "Description(optional)",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 3, color: Colors.pink,
+                        ),
+                        borderRadius : BorderRadius.all(Radius.circular(30.0)),
+                      ),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: null,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: const BorderSide(color: Colors.pink)
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                      "Add",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
               ],
             ),
