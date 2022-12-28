@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "366745336658",
+    "project_id": "ema-a551f",
+    "storage_bucket": "ema-a551f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366745336658:android:f553d881a493ff9c64988b",
+        "android_client_info": {
+          "package_name": "com.example.ema"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366745336658-j3c1kq83lv71c9jd0po7tkd872pkck5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZli01UI_LuarAc6dtXMjEqpE8CLQfdd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366745336658-j3c1kq83lv71c9jd0po7tkd872pkck5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
