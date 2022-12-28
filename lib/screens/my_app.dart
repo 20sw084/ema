@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
       title: 'Splash Screen',
       theme: ThemeData(
         primarySwatch: Colors.pink,
-        // primarySwatch: Color.fromARGB(100, 245, 166, 240),
       ),
       home: Dashboard(),
     );

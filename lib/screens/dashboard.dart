@@ -22,32 +22,34 @@ class _DashboardState extends State<Dashboard> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Expense Dashboard"
-        ),
-      ),
-      body: Column(
-        children: <Widget>[
-          HorizontalCard(),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: 12,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                      leading: Text((index+1).toString()),
-                      trailing: Text(
-                        "9999 PKR",
-                        style: TextStyle(color: Colors.green, fontSize: 15),
-                      ),
-                      title: Text("Expense - $index"));
-                },
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Expense Dashboard"
           ),
-        ],
+        ),
+        body: Column(
+          children: <Widget>[
+            HorizontalCard(),
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 12,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                        leading: Text((index+1).toString()),
+                        trailing: Text(
+                          "9999 PKR",
+                          style: TextStyle(color: Colors.green, fontSize: 15),
+                        ),
+                        title: Text("Expense - $index"));
+                  },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
