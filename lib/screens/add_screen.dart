@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 enum AmountType { income, expense }
@@ -12,10 +13,13 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  String name = '', amount = '';
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  final database = FirebaseDatabase.instance.ref();
+  String name = '', amount = '' , description = '';
   AmountType _type = AmountType.expense;
   @override
   Widget build(BuildContext context) {
+    final budgetTree = database.child("budgetTree/");
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text("Add"),),
@@ -49,9 +53,9 @@ class _AddScreenState extends State<AddScreen> {
                         if(_type == AmountType.expense){
                           int? val1 = int.parse(val);
                           val1 = (val1 - 2*(val1));
-                          name = val1.toString();
+                          amount = val1.toString();
                         }
-                        else {name = val;}
+                        else {amount = val;}
                       },
                       decoration: const InputDecoration(
                         labelText: "Amount*",
@@ -97,11 +101,14 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: TextField(
                       controller: null,
-                      decoration: InputDecoration(
+                      onChanged: (val){
+                        description = val;
+                      },
+                      decoration: const InputDecoration(
                         labelText: "Description",
                         hintText: "Description(optional)",
                         enabledBorder: OutlineInputBorder(
@@ -114,7 +121,19 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: null,
+                    onPressed: (){
+                      budgetTree.set(
+                        {
+                          'name' : name,
+                          'amount' : amount,
+                          'description' : description,
+                        }
+                      ).then(
+                            (value) => log("Data Written Successfully."),
+                      ).catchError(
+                            (error) => log('Something went Wrong.'),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
