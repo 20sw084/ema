@@ -1,6 +1,6 @@
-import 'package:ema/widgets/horizontal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import '../widgets/horiontal_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);

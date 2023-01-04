@@ -63,19 +63,19 @@ class _HorizontalCardState extends State<HorizontalCard> {
     );
   }
 
-static TextStyle textStyle (BuildContext context){
-  return const TextStyle(
-    color: Colors.white,
+  static TextStyle textStyle (BuildContext context){
+    return const TextStyle(
+      color: Colors.white,
       fontSize: 30,
-  );
-}
+    );
+  }
 
-static TextStyle priceTextStyle (BuildContext context){
-  return const TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-    fontSize: 30,
-  );
-}
+  static TextStyle priceTextStyle (BuildContext context){
+    return const TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 30,
+    );
+  }
 
 }

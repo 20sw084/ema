@@ -122,7 +122,7 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      budgetTree.set(
+                      budgetTree.update(
                         {
                           'name' : name,
                           'amount' : amount,
