@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 enum AmountType { income, expense }
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({Key? key}) : super(key: key);
+  AddScreen({Key? key}) : super(key: key);
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -14,12 +14,19 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+
   final database = FirebaseDatabase.instance.ref();
+
   String name = '', amount = '' , description = '';
+
   AmountType _type = AmountType.expense;
+
   @override
   Widget build(BuildContext context) {
     final budgetTree = database.child("budgetTree/");
+    TextEditingController desController = TextEditingController();
+    TextEditingController nameController = TextEditingController();
+    TextEditingController amountController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text("Add"),),
@@ -31,6 +38,7 @@ class _AddScreenState extends State<AddScreen> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
+                      controller: nameController,
                       onChanged: (val){
                         name = val;
                       },
@@ -49,6 +57,7 @@ class _AddScreenState extends State<AddScreen> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
+                      controller: amountController,
                       onChanged: (val){
                         if(_type == AmountType.expense){
                           int? val1 = int.parse(val);
@@ -104,7 +113,7 @@ class _AddScreenState extends State<AddScreen> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
-                      controller: null,
+                      controller: desController,
                       onChanged: (val){
                         description = val;
                       },
@@ -122,7 +131,7 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      budgetTree.update(
+                      budgetTree.push().set(
                         {
                           'name' : name,
                           'amount' : amount,
@@ -133,6 +142,9 @@ class _AddScreenState extends State<AddScreen> {
                       ).catchError(
                             (error) => log('Something went Wrong.'),
                       );
+                        nameController.clear();
+                        amountController.clear();
+                        desController.clear();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
