@@ -2,9 +2,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 enum AmountType { income, expense }
-
 class AddScreen extends StatefulWidget {
   AddScreen({Key? key}) : super(key: key);
 
@@ -14,11 +12,8 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
-
   final database = FirebaseDatabase.instance.ref();
-
   String name = '', amount = '' , description = '';
-
   AmountType _type = AmountType.expense;
 
   @override
