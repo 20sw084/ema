@@ -47,14 +47,12 @@ class _DashboardState extends State<Dashboard> {
                       Animation<double> animation, int index) {
                     Map _budget = snapshot.value as Map;
                     _budget['key'] = snapshot.key;
-                    // setState(() {
                       if(int.parse(_budget["amount"]) > 0){
                         income += int.parse(_budget["amount"]);
                       }
                       else{
                         expense += int.parse(_budget["amount"]);
                       }
-                    // });
                     return ListTile(
                         leading: Text((index + 1).toString()),
                         trailing: Text(
