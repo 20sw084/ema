@@ -55,20 +55,6 @@ class _DashboardState extends State<Dashboard> {
                         title: Text(_budget["name"])
                     );
                   },
-                // child: ListView.builder(
-                //   scrollDirection: Axis.vertical,
-                //   shrinkWrap: true,
-                //   itemCount: 22,//dataa["index"].length,
-                //   itemBuilder: (BuildContext context, int index) {
-                //     return ListTile(
-                //         leading: Text((index + 1).toString()),
-                //         trailing: Text(
-                //           "9999 PKR",
-                //           style: TextStyle(color: Colors.green, fontSize: 15),
-                //         ),
-                //         title: Text("name aega"));
-                //   },
-                // ),
               ),
             ),
           ],
