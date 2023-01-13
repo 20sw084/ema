@@ -13,7 +13,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int income = 0, expense = 0;
+  // int income = 0, expense = 0;
   Query databaseRef = FirebaseDatabase.instance.ref().child('budgetTree');
 
   @override
@@ -37,7 +37,7 @@ class _DashboardState extends State<Dashboard> {
         ),
         body: Column(
           children: <Widget>[
-            HorizontalCard(income: income, expense: expense,),
+            HorizontalCard(),
             Flexible(
               child: FirebaseAnimatedList(
                 shrinkWrap: true,
@@ -47,12 +47,12 @@ class _DashboardState extends State<Dashboard> {
                       Animation<double> animation, int index) {
                     Map _budget = snapshot.value as Map;
                     _budget['key'] = snapshot.key;
-                      if(int.parse(_budget["amount"]) > 0){
-                        income += int.parse(_budget["amount"]);
-                      }
-                      else{
-                        expense += int.parse(_budget["amount"]);
-                      }
+                      // if(int.parse(_budget["amount"]) > 0){
+                      //   income += int.parse(_budget["amount"]);
+                      // }
+                      // else{
+                      //   expense += int.parse(_budget["amount"]);
+                      // }
                     return ListTile(
                         leading: Text((index + 1).toString()),
                         trailing: Text(

@@ -1,29 +1,21 @@
-import 'package:ema/screens/add_screen.dart';
+import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/add_screen.dart';
+
 class HorizontalCard extends StatefulWidget {
-  int income = 0, expense = 0;
-  HorizontalCard({Key? key, required this.income, required this.expense}) : super(key: key);
+  const HorizontalCard({Key? key,}) : super(key: key);
 
   @override
   State<HorizontalCard> createState() => _HorizontalCardState();
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
-  // Query databaseRef = FirebaseDatabase.instance.ref('budgetTree').orderByChild("amount");
-  // Query databaseRef = FirebaseDatabase.instance.ref('budgetTree');
   Query databaseRef = FirebaseDatabase.instance.ref().child('budgetTree');
-  // final ref = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
-    // final snapshot = await ref.child('users/').get();
-    // if (snapshot.exists) {
-    //   print(snapshot.value);
-    // } else {
-    //   print('No data available.');
-    // }
     int income = 0, expense = 0;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -37,11 +29,11 @@ class _HorizontalCardState extends State<HorizontalCard> {
               child: StreamBuilder(
                 stream: databaseRef.onValue,
                 builder: (context,AsyncSnapshot<DatabaseEvent> snapshot){
-                  Map<dynamic, dynamic> map = snapshot.data!.snapshot.value as dynamic;
-                  // list bnai h taake pooora map ajae is men
-                  List<dynamic> list = [];
 
                   if(snapshot.hasData){
+                    Map<dynamic, dynamic> map = snapshot.data!.snapshot.value as Map;
+                    // list bnai h taake pooora map ajae is men
+                    List<dynamic> list = [];
                     list.clear();
                     list = map.values.toList();
                     // y pooori list populate ho gai.
@@ -53,6 +45,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           income += int.parse(list[index]["amount"]);
                         }
                         else{
+                          log("message");
                           expense += int.parse(list[index]["amount"]);
                         }
                         return Container();
@@ -84,7 +77,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         //   style: priceTextStyle(context),),
                         ListTile(
                           leading: Text(
-                            widget.income.toString(),
+                            income.toString(),
                             style: priceTextStyle(context),),
                           trailing: Text(
                             " PKR",
@@ -94,6 +87,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           child: const Icon(
                             Icons.add_circle_outline_rounded, color: Colors.white,),
                           onTap: () {
+                            log(expense.toString());
                             Navigator.push(context,
                               MaterialPageRoute(builder: (context) => AddScreen(),),);
                           },
@@ -123,7 +117,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${widget.expense.abs()}",
+                                expense.abs().toString(),
                                 style: priceTextStyle(context),),
                               Text(
                                 " PKR",
