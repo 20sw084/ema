@@ -1,11 +1,12 @@
-import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
-  const HorizontalCard({Key? key,}) : super(key: key);
+  const HorizontalCard({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HorizontalCard> createState() => _HorizontalCardState();
@@ -13,10 +14,10 @@ class HorizontalCard extends StatefulWidget {
 
 class _HorizontalCardState extends State<HorizontalCard> {
   Query databaseRef = FirebaseDatabase.instance.ref().child('budgetTree');
+  int income = 0, expense = 0;
 
   @override
   Widget build(BuildContext context) {
-    int income = 0, expense = 0;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -28,31 +29,27 @@ class _HorizontalCardState extends State<HorizontalCard> {
               // flex: 0,
               child: StreamBuilder(
                 stream: databaseRef.onValue,
-                builder: (context,AsyncSnapshot<DatabaseEvent> snapshot){
-
-                  if(snapshot.hasData){
-                    Map<dynamic, dynamic> map = snapshot.data!.snapshot.value as Map;
-                    // list bnai h taake pooora map ajae is men
+                builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                  income = 0;
+                  expense = 0;
+                  if (snapshot.hasData) {
+                    Map<dynamic, dynamic> map =
+                        snapshot.data!.snapshot.value as dynamic;
                     List<dynamic> list = [];
                     list.clear();
                     list = map.values.toList();
-                    // y pooori list populate ho gai.
-
                     return ListView.builder(
                       itemCount: snapshot.data!.snapshot.children.length,
-                      itemBuilder: (context, index){
-                        if(int.parse(list[index]['amount']) > 0){
+                      itemBuilder: (context, index) {
+                        if (int.parse(list[index]['amount']) > 0) {
                           income += int.parse(list[index]["amount"]);
-                        }
-                        else{
-                          log("message");
+                        } else {
                           expense += int.parse(list[index]["amount"]);
                         }
                         return Container();
                       },
                     );
-                  }
-                  else{
+                  } else {
                     return CircularProgressIndicator();
                   }
                 },
@@ -72,24 +69,32 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Income", style: textStyle(context),),
-                        // Text("${widget.income.toString()} PKR",
-                        //   style: priceTextStyle(context),),
+                        Text(
+                          "Income",
+                          style: textStyle(context),
+                        ),
                         ListTile(
                           leading: Text(
                             income.toString(),
-                            style: priceTextStyle(context),),
+                            style: priceTextStyle(context),
+                          ),
                           trailing: Text(
                             " PKR",
-                            style: priceTextStyle2(context),),
+                            style: priceTextStyle2(context),
+                          ),
                         ),
                         GestureDetector(
                           child: const Icon(
-                            Icons.add_circle_outline_rounded, color: Colors.white,),
+                            Icons.add_circle_outline_rounded,
+                            color: Colors.white,
+                          ),
                           onTap: () {
-                            log(expense.toString());
-                            Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => AddScreen(),),);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddScreen(),
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -100,7 +105,6 @@ class _HorizontalCardState extends State<HorizontalCard> {
                   width: 8,
                 ),
                 Expanded(
-                  // flex: 2,
                   child: Container(
                     height: 150,
                     decoration: BoxDecoration(
@@ -108,28 +112,40 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 10.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("Expense", style: textStyle(context),),
+                          Text(
+                            "Expense",
+                            style: textStyle(context),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 expense.abs().toString(),
-                                style: priceTextStyle(context),),
+                                style: priceTextStyle(context),
+                              ),
                               Text(
                                 " PKR",
-                                style: priceTextStyle2(context),),
+                                style: priceTextStyle2(context),
+                              ),
                             ],
                           ),
                           GestureDetector(
                             child: const Icon(
-                              Icons.add_circle_outline_rounded, color: Colors.white,),
+                              Icons.add_circle_outline_rounded,
+                              color: Colors.white,
+                            ),
                             onTap: () {
-                              Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => AddScreen(),),);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddScreen(),
+                                ),
+                              );
                             },
                           ),
                         ],
