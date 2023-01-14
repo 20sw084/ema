@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
@@ -15,7 +16,6 @@ class HorizontalCard extends StatefulWidget {
 class _HorizontalCardState extends State<HorizontalCard> {
   Query databaseRef = FirebaseDatabase.instance.ref().child('budgetTree');
   int income = 0, expense = 0;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,26 +26,28 @@ class _HorizontalCardState extends State<HorizontalCard> {
         child: Column(
           children: [
             Expanded(
-              // flex: 0,
-              child: StreamBuilder(
+              child: StreamBuilder (
                 stream: databaseRef.onValue,
                 builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-                  income = 0;
-                  expense = 0;
                   if (snapshot.hasData) {
-                    Map<dynamic, dynamic> map =
-                        snapshot.data!.snapshot.value as dynamic;
-                    List<dynamic> list = [];
-                    list.clear();
-                    list = map.values.toList();
+                    income = 0;
+                    expense = 0;
+                    Map<dynamic, dynamic> map = snapshot.data!.snapshot.value as Map;
+                    // list.clear();
+                    // Map _budget = snapshot.data!.snapshot.value as Map;
+                    // map['key'] = snapshot.data!.snapshot.key;
+                    List<dynamic> list = map.values.toList();
                     return ListView.builder(
                       itemCount: snapshot.data!.snapshot.children.length,
                       itemBuilder: (context, index) {
-                        if (int.parse(list[index]['amount']) > 0) {
-                          income += int.parse(list[index]["amount"]);
-                        } else {
-                          expense += int.parse(list[index]["amount"]);
-                        }
+                        // log(map[index]["amount"]);
+                        //   if (int.parse(list[index]['amount']) > 0) {
+                        //     income += int.parse(list[index]["amount"]);
+                        //   } else {
+                        //     expense += int.parse(list[index]["amount"]);
+                        //   }
+                        (int.parse(list[index]['amount']) > 0)?income += int.parse(list[index]["amount"]):expense += int.parse(list[index]["amount"]);
+                        // (int.parse(map[index]["amount"]) > 0)?income += int.parse(map[index]["amount"]):expense += int.parse(map[index]["amount"]);
                         return Container();
                       },
                     );
@@ -58,8 +60,23 @@ class _HorizontalCardState extends State<HorizontalCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+      //           ListView(
+      //             children: [
+      //               for (var i=0; i < list.length; i++)
+      // {
+      // Container(
+      // child: Text("$i")
+      // ),
+      //   // int.parse(list[i]['amount']) > 0 ? income += int.parse(list[index]["amount"]) : expense += int.parse(list[index]["amount"]);
+      //
+      // }
+      //
+      //               // {
+      //               //
+      //               // }
+      //             ],
+      //           ),
                 Expanded(
-                  // flex: 2,
                   child: Container(
                     height: 150,
                     decoration: BoxDecoration(
@@ -89,12 +106,14 @@ class _HorizontalCardState extends State<HorizontalCard> {
                             color: Colors.white,
                           ),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddScreen(),
-                              ),
-                            );
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddScreen(),
+                                ),
+                              );
+                            });
                           },
                         ),
                       ],

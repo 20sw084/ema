@@ -140,6 +140,7 @@ class _AddScreenState extends State<AddScreen> {
                         nameController.clear();
                         amountController.clear();
                         desController.clear();
+                        Navigator.pop(context);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
