@@ -18,6 +18,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
   int income = 0, expense = 0;
   @override
   Widget build(BuildContext context) {
+    List<dynamic> list;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -33,10 +34,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     income = 0;
                     expense = 0;
                     Map<dynamic, dynamic> map = snapshot.data!.snapshot.value as Map;
-                    // list.clear();
-                    // Map _budget = snapshot.data!.snapshot.value as Map;
-                    // map['key'] = snapshot.data!.snapshot.key;
-                    List<dynamic> list = map.values.toList();
+                     list =  map.values.toList();
                     return ListView.builder(
                       itemCount: snapshot.data!.snapshot.children.length,
                       itemBuilder: (context, index) {
@@ -47,7 +45,6 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         //     expense += int.parse(list[index]["amount"]);
                         //   }
                         (int.parse(list[index]['amount']) > 0)?income += int.parse(list[index]["amount"]):expense += int.parse(list[index]["amount"]);
-                        // (int.parse(map[index]["amount"]) > 0)?income += int.parse(map[index]["amount"]):expense += int.parse(map[index]["amount"]);
                         return Container();
                       },
                     );
@@ -60,22 +57,6 @@ class _HorizontalCardState extends State<HorizontalCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-      //           ListView(
-      //             children: [
-      //               for (var i=0; i < list.length; i++)
-      // {
-      // Container(
-      // child: Text("$i")
-      // ),
-      //   // int.parse(list[i]['amount']) > 0 ? income += int.parse(list[index]["amount"]) : expense += int.parse(list[index]["amount"]);
-      //
-      // }
-      //
-      //               // {
-      //               //
-      //               // }
-      //             ],
-      //           ),
                 Expanded(
                   child: Container(
                     height: 150,
