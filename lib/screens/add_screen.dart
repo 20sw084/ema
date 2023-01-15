@@ -12,13 +12,12 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
-  final database = FirebaseDatabase.instance.ref();
+  final budgetTree = FirebaseDatabase.instance.ref('budgetTree');
   String name = '', amount = '' , description = '';
   AmountType _type = AmountType.expense;
-
+int index = 0;
   @override
   Widget build(BuildContext context) {
-    final budgetTree = database.child("budgetTree/");
     TextEditingController desController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController amountController = TextEditingController();
@@ -126,7 +125,9 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      budgetTree.push().set(
+                      budgetTree
+                      // child((++index).toString())
+                          .child(DateTime.now().millisecondsSinceEpoch.toString()).set(
                         {
                           'name' : name,
                           'amount' : amount,
