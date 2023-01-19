@@ -1,11 +1,10 @@
 import 'dart:developer';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
-  const HorizontalCard({
+
+  HorizontalCard({
     Key? key,
   }) : super(key: key);
 
@@ -14,22 +13,6 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
-  Query databaseRef = FirebaseDatabase.instance.ref().child('budgetTree');
-  int income = 0, expense = 0;
-  @override
-  void initState() {
-    databaseRef.onValue.listen((event){
-      // income = 0;
-      // expense = 0;
-      event.snapshot.children.forEach((snapshot) {
-        Map<dynamic, dynamic> myp = snapshot.value as dynamic;
-        (int.parse(myp['amount']) < 0)?expense += int.parse(myp["amount"]):income += int.parse(myp['amount']);
-      });
-      log(expense.toString());
-      log(income.toString());
-    });
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,9 +39,9 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     ),
                     ListTile(
                       leading: Text(
-                        income.toString(),
-                        style: priceTextStyle(context),
-                      ),
+                                "1000",
+                                style: priceTextStyle(context),
+                              ),
                       trailing: Text(
                         " PKR",
                         style: priceTextStyle2(context),
@@ -108,7 +91,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            expense.abs().toString(),
+                            "1000",
                             style: priceTextStyle(context),
                           ),
                           Text(
@@ -140,7 +123,34 @@ class _HorizontalCardState extends State<HorizontalCard> {
         ),
       ),
     );
+
   }
+
+  // int getIncome() {
+  //   int income = 0;
+  //   databaseRef.onValue.listen((event) async {
+  //     for (var snapshot in event.snapshot.children) {
+  //       Map<dynamic, dynamic> myp = await snapshot.value as dynamic;
+  //       (int.parse(myp['amount']) < 0) ? income += 0 : income += int.parse(myp['amount']);
+  //     }
+  //     // log(expense.toString());
+  //     log(income.toString());
+  //   });
+  //   return income;
+  // }
+
+  // Future<int> getExpense() async{
+  //   int expense = 0;
+  //   databaseRef.onValue.listen((event) {
+  //     for (var snapshot in event.snapshot.children) {
+  //       Map<dynamic, dynamic> myp = snapshot.value as dynamic;
+  //       (int.parse(myp['amount']) > 0) ? expense += 0 : expense += int.parse(myp['amount']);
+  //     }
+  //     // log(expense.toString());
+  //     log(expense.toString());
+  //   });
+  //   return expense;
+  // }
 
   static TextStyle textStyle(BuildContext context) {
     return const TextStyle(
