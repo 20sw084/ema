@@ -151,22 +151,6 @@ class _AddScreenState extends State<AddScreen> {
                                 // return showToast();
                               },
                           );
-                      // budgetTree
-                      // // child((++index).toString())
-                      //     .child(DateTime.now().millisecondsSinceEpoch.toString()).set(
-                      //   {
-                      //     'name' : name,
-                      //     'amount' : amount,
-                      //     'description' : description,
-                      //   }
-                      // ).then(
-                      //       (value) => log("Data Written Successfully."),
-                      // ).catchError(
-                      //       (error) => log('Something went Wrong.'),
-                      // );
-                      //   nameController.clear();
-                      //   amountController.clear();
-                      //   desController.clear();
                       Navigator.pop(context);
                     },
                     style: ButtonStyle(
