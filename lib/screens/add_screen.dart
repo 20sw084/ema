@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AmountType { income, expense }
 
@@ -19,7 +20,6 @@ class _AddScreenState extends State<AddScreen> {
   String name = '', amount = '', description = '';
   AmountType _type = AmountType.expense;
   int index = 0;
-
   @override
   Widget build(BuildContext context) {
     TextEditingController desController = TextEditingController();
@@ -134,12 +134,14 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String id = DateTime.now().millisecondsSinceEpoch.toString();
+                      SharedPreferences sp = await SharedPreferences.getInstance();
                       fireStore
                           .doc(id)
                           .set({
                             "id" : id,
+                            "userName" : sp.getString("name"),
                             "name" : name,
                             "amount" : amount,
                             "description" : description,

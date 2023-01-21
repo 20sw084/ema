@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ema/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/add_screen.dart';
 
@@ -14,9 +15,52 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
-  final fireStore = FirebaseFirestore.instance.collection("budgetTree").snapshots();
+  CollectionReference fireStore = FirebaseFirestore.instance.collection("budgetTree");
+
+  int getIncome() {
+    int income = 0;
+    fireStore.snapshots().listen((querySnapshot) {
+      querySnapshot.docChanges.forEach((change) {
+        (int.parse(change.doc['amount']) < 0) ? income += 0 : income += int.parse(change.doc['amount']);
+        // income += change['amount'];
+      });
+    }
+      //         (event) async {
+      //   for (var snapshot in event.docs.snapshot.children) {
+      //     Map<dynamic, dynamic> myp = await snapshot.value as dynamic;
+      //     (int.parse(myp['amount']) < 0) ? income += 0 : income += int.parse(myp['amount']);
+      //   }
+      //   // log(expense.toString());
+      //   log(income.toString());
+      // }
+    );
+    log(income.toString());
+    return income;
+  }
+
+  Future<int> getExpense() async{
+    int expense = 0;
+    await fireStore.snapshots().listen((querySnapshot) {
+      querySnapshot.docChanges.forEach((change) async {
+        (int.parse(change.doc['amount']) > 0) ? expense += 0 : expense += int.parse(change.doc['amount']);
+        // income += change['amount'];
+      });
+    }
+    );
+    // databaseRef.onValue.listen((event) {
+    //   for (var snapshot in event.snapshot.children) {
+    //     Map<dynamic, dynamic> myp = snapshot.value as dynamic;
+    //     (int.parse(myp['amount']) > 0) ? expense += 0 : expense += int.parse(myp['amount']);
+    //   }
+    //   // log(expense.toString());
+    //   log(expense.toString());
+    // });
+    log(expense.toString());
+    return expense;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -41,7 +85,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     ),
                     ListTile(
                       leading: Text(
-                                "1000",
+                                getIncome().toString(),
                                 style: priceTextStyle(context),
                               ),
                       trailing: Text(
@@ -92,9 +136,17 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "1000",
-                            style: priceTextStyle(context),
+                          FutureBuilder(
+                            future: getExpense(),
+                            builder: (context, snapshot) {
+                              if(snapshot.connectionState == ConnectionState.waiting){
+                                return const CircularProgressIndicator();
+                              }
+                              return Text(
+                                1000.toString(),
+                                style: priceTextStyle(context),
+                              );
+                            }
                           ),
                           Text(
                             " PKR",
@@ -111,7 +163,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddScreen(),
+                              builder: (context) => OnboardingScreen(),
                             ),
                           );
                         },
@@ -128,31 +180,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
 
   }
 
-  // int getIncome() {
-  //   int income = 0;
-  //   databaseRef.onValue.listen((event) async {
-  //     for (var snapshot in event.snapshot.children) {
-  //       Map<dynamic, dynamic> myp = await snapshot.value as dynamic;
-  //       (int.parse(myp['amount']) < 0) ? income += 0 : income += int.parse(myp['amount']);
-  //     }
-  //     // log(expense.toString());
-  //     log(income.toString());
-  //   });
-  //   return income;
-  // }
 
-  // Future<int> getExpense() async{
-  //   int expense = 0;
-  //   databaseRef.onValue.listen((event) {
-  //     for (var snapshot in event.snapshot.children) {
-  //       Map<dynamic, dynamic> myp = snapshot.value as dynamic;
-  //       (int.parse(myp['amount']) > 0) ? expense += 0 : expense += int.parse(myp['amount']);
-  //     }
-  //     // log(expense.toString());
-  //     log(expense.toString());
-  //   });
-  //   return expense;
-  // }
 
   static TextStyle textStyle(BuildContext context) {
     return const TextStyle(
