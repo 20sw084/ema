@@ -1,3 +1,4 @@
+import 'package:ema/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +46,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () async{
                 SharedPreferences sp = await SharedPreferences.getInstance();
                 sp.setString('name', name);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Dashboard(),
+                  ),
+                );
               },
               style: ButtonStyle(
                 backgroundColor:
