@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../screens/add_screen.dart';
 
@@ -13,6 +14,7 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
+  final fireStore = FirebaseFirestore.instance.collection("budgetTree").snapshots();
   @override
   Widget build(BuildContext context) {
     return Padding(
