@@ -2,6 +2,8 @@ import 'package:ema/screens/dashboard.dart';
 import 'package:ema/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../wrapper.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       // home: OnboardingScreen(),
-      home: Dashboard(),
+      home: Wrapper(),
     );
   }
 }
