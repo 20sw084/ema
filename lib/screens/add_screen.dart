@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/utils.dart';
+
 enum AmountType { income, expense }
 
 class AddScreen extends StatefulWidget {
@@ -146,10 +148,10 @@ class _AddScreenState extends State<AddScreen> {
                             "amount" : amount,
                             "description" : description,
                           })
-                          .then((value) => log("Data Written Successfully."))
+                          .then((value) => Utils().toastMessage("Data Written Successfully."))
                           .onError(
                               (error, stackTrace) {
-                                return print(error.toString());
+                                return Utils().toastMessage(error.toString());
                                 // return showToast();
                               },
                           );

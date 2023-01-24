@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
-
   HorizontalCard({
     Key? key,
   }) : super(key: key);
@@ -15,52 +14,51 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
-  CollectionReference fireStore = FirebaseFirestore.instance.collection("budgetTree");
+  int income = 0;
+  int expense = 0;
+
+  @override
+  void initState() {
+    income = getIncome();
+    expense = getExpense();
+    // TODO: implement initState
+    super.initState();
+  }
 
   int getIncome() {
     int income = 0;
-    fireStore.snapshots().listen((querySnapshot) {
+    CollectionReference fireStore =
+        FirebaseFirestore.instance.collection("budgetTree");
+    fireStore.snapshots().listen((querySnapshot) async {
       querySnapshot.docChanges.forEach((change) {
-        (int.parse(change.doc['amount']) < 0) ? income += 0 : income += int.parse(change.doc['amount']);
-        // income += change['amount'];
+        (int.parse(change.doc['amount']) < 0)
+            ? income += 0
+            : income += int.parse(change.doc['amount']);
       });
-    }
-      //         (event) async {
-      //   for (var snapshot in event.docs.snapshot.children) {
-      //     Map<dynamic, dynamic> myp = await snapshot.value as dynamic;
-      //     (int.parse(myp['amount']) < 0) ? income += 0 : income += int.parse(myp['amount']);
-      //   }
-      //   // log(expense.toString());
-      //   log(income.toString());
-      // }
-    );
-    log(income.toString());
+    });
+    setState(() {
+    log('Income : ${income.toString()}');
+    });
     return income;
   }
 
-  Future<int> getExpense() async{
+  int getExpense() {
     int expense = 0;
-    await fireStore.snapshots().listen((querySnapshot) {
-      querySnapshot.docChanges.forEach((change) async {
-        (int.parse(change.doc['amount']) > 0) ? expense += 0 : expense += int.parse(change.doc['amount']);
-        // income += change['amount'];
+    CollectionReference fireStore =
+        FirebaseFirestore.instance.collection("budgetTree");
+    fireStore.snapshots().listen((querySnapshot) {
+      querySnapshot.docChanges.forEach((change) {
+        (int.parse(change.doc['amount']) > 0)
+            ? expense += 0
+            : expense += int.parse(change.doc['amount']);
       });
-    }
-    );
-    // databaseRef.onValue.listen((event) {
-    //   for (var snapshot in event.snapshot.children) {
-    //     Map<dynamic, dynamic> myp = snapshot.value as dynamic;
-    //     (int.parse(myp['amount']) > 0) ? expense += 0 : expense += int.parse(myp['amount']);
-    //   }
-    //   // log(expense.toString());
-    //   log(expense.toString());
-    // });
-    log(expense.toString());
+    });
+    log('Expense : ${expense.toString()}');
     return expense;
   }
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -85,9 +83,9 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     ),
                     ListTile(
                       leading: Text(
-                                getIncome().toString(),
-                                style: priceTextStyle(context),
-                              ),
+                        getIncome().toString(),
+                        style: priceTextStyle(context),
+                      ),
                       trailing: Text(
                         " PKR",
                         style: priceTextStyle2(context),
@@ -136,17 +134,9 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FutureBuilder(
-                            future: getExpense(),
-                            builder: (context, snapshot) {
-                              if(snapshot.connectionState == ConnectionState.waiting){
-                                return const CircularProgressIndicator();
-                              }
-                              return Text(
-                                1000.toString(),
-                                style: priceTextStyle(context),
-                              );
-                            }
+                          Text(
+                            getExpense().toString(),
+                            style: priceTextStyle(context),
                           ),
                           Text(
                             " PKR",
@@ -163,7 +153,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OnboardingScreen(),
+                              builder: (context) => AddScreen(),
                             ),
                           );
                         },
@@ -177,10 +167,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
         ),
       ),
     );
-
   }
-
-
 
   static TextStyle textStyle(BuildContext context) {
     return const TextStyle(
