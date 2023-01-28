@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:ema/provider/amount_provider.dart';
 import 'package:ema/screens/dashboard.dart';
 import 'package:ema/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Wrapper extends StatefulWidget {
@@ -24,17 +26,21 @@ class _WrapperState extends State<Wrapper> {
    SharedPreferences sp = await SharedPreferences.getInstance();
    name = sp.getString('name') ?? 'empty';
    log(name.toString());
-   setState(() {
-
-   });
   }
   @override
   Widget build(BuildContext context) {
      if(name == 'empty') {
-       return const OnboardingScreen();
+       return ChangeNotifierProvider(
+         create: (_) => AmountProvider(),
+           child: const OnboardingScreen(),
+       );
      }
      else {
-       return const Dashboard();
+       return ChangeNotifierProvider(
+         create: (_) => AmountProvider(),
+         child: Dashboard(),
+       );
+       // return const Dashboard();
      }
   }
 }

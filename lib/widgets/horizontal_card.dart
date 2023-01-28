@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ema/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/amount_provider.dart';
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
@@ -14,51 +16,15 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
-  int income = 0;
-  int expense = 0;
-
   @override
   void initState() {
-    income = getIncome();
-    expense = getExpense();
     // TODO: implement initState
     super.initState();
   }
 
-  int getIncome() {
-    int income = 0;
-    CollectionReference fireStore =
-        FirebaseFirestore.instance.collection("budgetTree");
-    fireStore.snapshots().listen((querySnapshot) async {
-      querySnapshot.docChanges.forEach((change) {
-        (int.parse(change.doc['amount']) < 0)
-            ? income += 0
-            : income += int.parse(change.doc['amount']);
-      });
-    });
-    setState(() {
-    log('Income : ${income.toString()}');
-    });
-    return income;
-  }
-
-  int getExpense() {
-    int expense = 0;
-    CollectionReference fireStore =
-        FirebaseFirestore.instance.collection("budgetTree");
-    fireStore.snapshots().listen((querySnapshot) {
-      querySnapshot.docChanges.forEach((change) {
-        (int.parse(change.doc['amount']) > 0)
-            ? expense += 0
-            : expense += int.parse(change.doc['amount']);
-      });
-    });
-    log('Expense : ${expense.toString()}');
-    return expense;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final amountProvider = Provider.of<AmountProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -83,7 +49,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                     ),
                     ListTile(
                       leading: Text(
-                        getIncome().toString(),
+                        amountProvider.getIncome().toString(),
                         style: priceTextStyle(context),
                       ),
                       trailing: Text(
@@ -97,14 +63,14 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         color: Colors.white,
                       ),
                       onTap: () {
-                        setState(() {
+                        // setState(() {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => AddScreen(),
                             ),
                           );
-                        });
+                        // });
                       },
                     ),
                   ],
@@ -135,7 +101,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            getExpense().toString(),
+                            amountProvider.getExpense().abs().toString(),
                             style: priceTextStyle(context),
                           ),
                           Text(
@@ -150,6 +116,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           color: Colors.white,
                         ),
                         onTap: () {
+                          // amountProvider.setExpense();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
