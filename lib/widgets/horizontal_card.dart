@@ -64,12 +64,12 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       ),
                       onTap: () {
                         // setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddScreen(),
-                            ),
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddScreen(),
+                          ),
+                        );
                         // });
                       },
                     ),

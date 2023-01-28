@@ -111,7 +111,6 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
-
 }
 
 class SlideMenu extends StatefulWidget {

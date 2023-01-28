@@ -137,23 +137,26 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      String id = DateTime.now().millisecondsSinceEpoch.toString();
-                      SharedPreferences sp = await SharedPreferences.getInstance();
+                      String id =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+                      SharedPreferences sp =
+                          await SharedPreferences.getInstance();
                       fireStore
                           .doc(id)
                           .set({
-                            "id" : id,
-                            "userName" : sp.getString("name"),
-                            "name" : name,
-                            "amount" : amount,
-                            "description" : description,
+                            "id": id,
+                            "userName": sp.getString("name"),
+                            "name": name,
+                            "amount": amount,
+                            "description": description,
                           })
-                          .then((value) => Utils().toastMessage("Data Written Successfully."))
+                          .then((value) => Utils()
+                              .toastMessage("Data Written Successfully."))
                           .onError(
-                              (error, stackTrace) {
-                                return Utils().toastMessage(error.toString());
-                                // return showToast();
-                              },
+                            (error, stackTrace) {
+                              return Utils().toastMessage(error.toString());
+                              // return showToast();
+                            },
                           );
                       Navigator.pop(context);
                     },
