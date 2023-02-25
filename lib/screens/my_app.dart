@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/amount_provider.dart';
 import '../wrapper.dart';
 
 class MyApp extends StatelessWidget {

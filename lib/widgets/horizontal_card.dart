@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../provider/amount_provider.dart';
 import '../provider/get_expense.dart';
+import '../provider/get_income.dart';
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
@@ -14,19 +13,17 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
+  late Future<dynamic> dataFutureIncome;
   late Future<dynamic> dataFutureExpense;
   @override
   void initState() {
     super.initState();
-    dataFutureExpense = getExpense().whenComplete(() {setState(() {
-      
-    });});
-    // log(dataFuture.toString());
+    dataFutureExpense = getExpense();
+    dataFutureIncome = getIncome();
   }
 
   @override
   Widget build(BuildContext context) {
-    final amountProvider = Provider.of<AmountProvider>(context, listen: true);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -49,23 +46,31 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       "Income",
                       style: textStyle(context),
                     ),
-                    ListTile(
-                      leading: Consumer<AmountProvider>(
-                          builder: (context, value, child) {
-                        return Text(
-                          12.toString(),
-                          // value.getIncome().toString(),
-                          style: priceTextStyle(context),
-                        );
-                      }),
-                      // Text(
-                      //   amountProvider.getIncome().toString(),
-                      //   style: priceTextStyle(context),
-                      // ),
-                      trailing: Text(
-                        " PKR",
-                        style: priceTextStyle2(context),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FutureBuilder(
+                            future: dataFutureIncome,
+                            builder: (context, snapshot) {
+                              if(snapshot.connectionState == ConnectionState.waiting){
+                                return CircularProgressIndicator();
+                              }
+                              else if(snapshot.hasData){
+                                return Text(
+                                  snapshot.data!.toString(),
+                                  style: priceTextStyle(context),
+                                );
+                              }
+                              else{
+                                return Text("Error");
+                              }
+                            }
+                        ),
+                        Text(
+                          " PKR",
+                          style: priceTextStyle2(context),
+                        ),
+                      ],
                     ),
                     GestureDetector(
                       child: const Icon(
@@ -73,14 +78,12 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         color: Colors.white,
                       ),
                       onTap: () {
-                        // setState(() {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddScreen(),
                           ),
                         );
-                        // });
                       },
                     ),
                   ],
