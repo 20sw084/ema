@@ -43,10 +43,10 @@ class _DashboardState extends State<Dashboard> {
                 stream: fireStore,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   if (snapshot.hasError) {
-                    return Text("Something Went Wrong");
+                    return const Text("Something Went Wrong");
                   }
                   return ListView(
                     children: ListTile.divideTiles(
@@ -158,15 +158,15 @@ class _SlideMenuState extends State<SlideMenu>
       });
     }, onHorizontalDragEnd: (data) {
       //To change slide direction, change to data.primaryVelocity! < -1500
-      if (data.primaryVelocity! > 1500)
+      if (data.primaryVelocity! > 1500) {
         _controller
-            .animateTo(.0); //close menu on fast swipe in the right direction
-      //To change slide direction, change to data.primaryVelocity! > 1500
-      else if (_controller.value >= .5 || data.primaryVelocity! < -1500)
+            .animateTo(.0);
+      } else if (_controller.value >= .5 || data.primaryVelocity! < -1500) {
         _controller.animateTo(
-            1.0); // fully open if dragged a lot to left or on fast swipe to left
-      else // close if none of above
+            1.0);
+      } else {
         _controller.animateTo(.0);
+      }
     }, child: LayoutBuilder(builder: (context, constraint) {
       return Stack(
         children: [

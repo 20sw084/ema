@@ -1,13 +1,11 @@
-import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ema/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/amount_provider.dart';
+import '../provider/get_expense.dart';
 import '../screens/add_screen.dart';
 
 class HorizontalCard extends StatefulWidget {
-  HorizontalCard({
+  const HorizontalCard({
     Key? key,
   }) : super(key: key);
 
@@ -16,15 +14,19 @@ class HorizontalCard extends StatefulWidget {
 }
 
 class _HorizontalCardState extends State<HorizontalCard> {
+  late Future<dynamic> dataFutureExpense;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    dataFutureExpense = getExpense().whenComplete(() {setState(() {
+      
+    });});
+    // log(dataFuture.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    final amountProvider = Provider.of<AmountProvider>(context);
+    final amountProvider = Provider.of<AmountProvider>(context, listen: true);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -48,10 +50,18 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       style: textStyle(context),
                     ),
                     ListTile(
-                      leading: Text(
-                        amountProvider.getIncome().toString(),
-                        style: priceTextStyle(context),
-                      ),
+                      leading: Consumer<AmountProvider>(
+                          builder: (context, value, child) {
+                        return Text(
+                          12.toString(),
+                          // value.getIncome().toString(),
+                          style: priceTextStyle(context),
+                        );
+                      }),
+                      // Text(
+                      //   amountProvider.getIncome().toString(),
+                      //   style: priceTextStyle(context),
+                      // ),
                       trailing: Text(
                         " PKR",
                         style: priceTextStyle2(context),
@@ -100,9 +110,22 @@ class _HorizontalCardState extends State<HorizontalCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            amountProvider.getExpense().abs().toString(),
-                            style: priceTextStyle(context),
+                          FutureBuilder(
+                            future: dataFutureExpense,
+                            builder: (context, snapshot) {
+                              if(snapshot.connectionState == ConnectionState.waiting){
+                                return CircularProgressIndicator();
+                              }
+                              else if(snapshot.hasData){
+                                 return Text(
+                                  snapshot.data!.abs().toString(),
+                                  style: priceTextStyle(context),
+                                );
+                              }
+                              else{
+                                return Text("Error");
+                              }
+                            }
                           ),
                           Text(
                             " PKR",
