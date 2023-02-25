@@ -142,8 +142,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                           color: Colors.white,
                         ),
                         onTap: () {
-                          // amountProvider.setExpense();
-                          Navigator.push(
+                            Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => AddScreen(),

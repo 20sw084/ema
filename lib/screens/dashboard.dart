@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ema/screens/view_details.dart';
 import 'package:ema/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -91,14 +92,27 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                           ],
-                          child: ListTile(
+                          child: GestureDetector(
+                            child: ListTile(
                               leading: Text((index + 1).toString()),
                               trailing: Text(
                                 "${snapshot.data.docs[index]["amount"]} PKR",
                                 style: const TextStyle(
                                     color: Colors.green, fontSize: 15),
                               ),
-                              title: Text(snapshot.data.docs[index]["name"])),
+                              title: Text(
+                                snapshot.data.docs[index]["name"],
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewDetails(),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       }),
                     ).toList(),
@@ -159,11 +173,9 @@ class _SlideMenuState extends State<SlideMenu>
     }, onHorizontalDragEnd: (data) {
       //To change slide direction, change to data.primaryVelocity! < -1500
       if (data.primaryVelocity! > 1500) {
-        _controller
-            .animateTo(.0);
+        _controller.animateTo(.0);
       } else if (_controller.value >= .5 || data.primaryVelocity! < -1500) {
-        _controller.animateTo(
-            1.0);
+        _controller.animateTo(1.0);
       } else {
         _controller.animateTo(.0);
       }

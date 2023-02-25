@@ -158,7 +158,9 @@ class _AddScreenState extends State<AddScreen> {
                               // return showToast();
                             },
                           );
-                      Navigator.pop(context);
+                      setState(() {
+                        Navigator.pop(context);
+                      });
                     },
                     style: ButtonStyle(
                       backgroundColor:
