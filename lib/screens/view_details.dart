@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
 
-class ViewDetails extends StatelessWidget {
-  const ViewDetails({Key? key}) : super(key: key);
+class ViewDetails extends StatefulWidget {
+  String id = '', uName = '',aName = '', aType= '', amount = '', desc = '';
+
+  ViewDetails({Key? key, required id, required uName, required aName, required aType, required amount, required desc}) : super(key: key);
+
+  @override
+  State<ViewDetails> createState() => _ViewDetailsState();
+
+  static TextStyle ts1(BuildContext context) {
+    return const TextStyle(
+      fontSize: 20,
+    );
+  }
+
+  static TextStyle ts2(BuildContext context) {
+    return const TextStyle(
+      fontSize: 20,
+    );
+  }
+}
+
+class _ViewDetailsState extends State<ViewDetails> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +39,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("ID",style: ts1(context),),
-                    Text("0123456789",style: ts2(context),),
+                    Text("ID",style: ViewDetails.ts1(context),),
+                    Text(widget.id,style: ViewDetails.ts2(context),),
                   ],
                 ),
               ),
@@ -29,8 +49,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("User Name",style: ts1(context),),
-                    Text("Jonny",style: ts1(context),),
+                    Text("User Name",style: ViewDetails.ts1(context),),
+                    Text(widget.uName,style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),
@@ -39,8 +59,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Amount Name",style: ts1(context),),
-                    Text("Expense h bro",style: ts1(context),),
+                    Text("Amount Name",style: ViewDetails.ts1(context),),
+                    Text(widget.aName,style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),
@@ -49,8 +69,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Amount Type",style: ts1(context),),
-                    Text("Income",style: ts1(context),),
+                    Text("Amount Type",style: ViewDetails.ts1(context),),
+                    Text("Income rrr",style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),
@@ -59,8 +79,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Amount",style: ts1(context),),
-                    Text("23456789",style: ts1(context),),
+                    Text("Amount",style: ViewDetails.ts1(context),),
+                    Text(widget.amount,style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),
@@ -69,8 +89,8 @@ class ViewDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Description",style: ts1(context),),
-                    Text("buht bri h",style: ts1(context),),
+                    Text("Description",style: ViewDetails.ts1(context),),
+                    Text(widget.desc,style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),
@@ -78,19 +98,6 @@ class ViewDetails extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-
-  static TextStyle ts1(BuildContext context) {
-    return const TextStyle(
-      fontSize: 25,
-    );
-  }
-
-  static TextStyle ts2(BuildContext context) {
-    return const TextStyle(
-      fontSize: 25,
     );
   }
 }

@@ -108,7 +108,14 @@ class _DashboardState extends State<Dashboard> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ViewDetails(),
+                                  builder: (context) => ViewDetails(
+                                    id: snapshot.data.docs[index]["id"],
+                                    uName: snapshot.data.docs[index]["userName"],
+                                    aName: snapshot.data.docs[index]["name"],
+                                    aType: snapshot.data.docs[index]["name"],
+                                    amount: snapshot.data.docs[index]["amount"],
+                                    desc: snapshot.data.docs[index]["description"],
+                                  ),
                                 ),
                               );
                             },
