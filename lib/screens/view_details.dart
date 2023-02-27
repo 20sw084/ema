@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ViewDetails extends StatefulWidget {
   String id = '', uName = '',aName = '', aType= '', amount = '', desc = '';
 
-  ViewDetails({Key? key, required id, required uName, required aName, required aType, required amount, required desc}) : super(key: key);
+  ViewDetails({Key? key, required this.id, required this.uName, required this.aName, required this.aType, required this.amount, required this.desc}) : super(key: key);
 
   @override
   State<ViewDetails> createState() => _ViewDetailsState();
@@ -70,7 +70,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Amount Type",style: ViewDetails.ts1(context),),
-                    Text("Income rrr",style: ViewDetails.ts1(context),),
+                    // Text((( int.parse(widget.amount) > 0):"Income"?"Expense"),style: ViewDetails.ts1(context),),
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ema/screens/view_details.dart';
 import 'package:ema/utils/utils.dart';
@@ -105,6 +106,11 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                             onTap: () {
+                              log(snapshot.data.docs[index]["id"].toString());
+                              log(snapshot.data.docs[index]["userName"].toString());
+                              log(snapshot.data.docs[index]["name"].toString());
+                              log(snapshot.data.docs[index]["amount"].toString());
+                              log(snapshot.data.docs[index]["description"].toString());
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
