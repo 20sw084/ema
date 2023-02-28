@@ -118,6 +118,9 @@ class _AddScreenState extends State<AddScreen> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      minLines: 3,//Normal textInputField will be displayed
+                      maxLines: 5,// when user presses enter it will adapt to it
                       controller: desController,
                       onChanged: (val) {
                         description = val;

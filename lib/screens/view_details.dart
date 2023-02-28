@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 
 class ViewDetails extends StatefulWidget {
   String id = '', uName = '', aName = '', aType = '', amount = '', desc = '';
@@ -133,9 +134,14 @@ class _ViewDetailsState extends State<ViewDetails> {
                       "Description",
                       style: ViewDetails.ts1(context),
                     ),
-                    Text(
-                      widget.desc,
-                      style: ViewDetails.ts1(context),
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.45,
+                      child: ReadMoreText(
+                        widget.desc,
+                        style: ViewDetails.ts1(context),
+                        trimLines: 2,
+                        trimMode: TrimMode.Line,
+                      ),
                     ),
                   ],
                 ),
