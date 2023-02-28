@@ -121,6 +121,7 @@ class _DashboardState extends State<Dashboard> {
                                     aType: snapshot.data.docs[index]["name"],
                                     amount: snapshot.data.docs[index]["amount"],
                                     desc: snapshot.data.docs[index]["description"],
+                                    date: snapshot.data.docs[index]["date"],
                                   ),
                                 ),
                               );

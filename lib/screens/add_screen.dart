@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/utils.dart';
 
-enum AmountType { income, expense }
 
 class AddScreen extends StatefulWidget {
-  AddScreen({Key? key}) : super(key: key);
+  bool isIncome = false;
+  AddScreen({Key? key, required this.isIncome}) : super(key: key);
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -20,7 +19,6 @@ class _AddScreenState extends State<AddScreen> {
   final fireStore = FirebaseFirestore.instance.collection("budgetTree");
 
   String name = '', amount = '', description = '';
-  AmountType _type = AmountType.expense;
   int index = 0;
   @override
   Widget build(BuildContext context) {
@@ -62,13 +60,7 @@ class _AddScreenState extends State<AddScreen> {
                     child: TextField(
                       controller: amountController,
                       onChanged: (val) {
-                        if (_type == AmountType.expense) {
-                          int? val1 = int.parse(val);
-                          val1 = (val1 - 2 * (val1));
-                          amount = val1.toString();
-                        } else {
-                          amount = val;
-                        }
+                        amount = val;
                       },
                       decoration: const InputDecoration(
                         labelText: "Amount*",
@@ -83,44 +75,12 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ListTile(
-                          title: const Text('Income'),
-                          leading: Radio(
-                            value: AmountType.income,
-                            groupValue: _type,
-                            onChanged: (value) {
-                              setState(() {
-                                _type = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListTile(
-                          title: const Text('Expense'),
-                          leading: Radio(
-                            value: AmountType.expense,
-                            groupValue: _type,
-                            onChanged: (value) {
-                              setState(() {
-                                _type = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
                       keyboardType: TextInputType.multiline,
-                      minLines: 3,//Normal textInputField will be displayed
-                      maxLines: 5,// when user presses enter it will adapt to it
+                      minLines: 3,
+                      maxLines: 5,
                       controller: desController,
                       onChanged: (val) {
                         description = val;
@@ -144,20 +104,32 @@ class _AddScreenState extends State<AddScreen> {
                           DateTime.now().millisecondsSinceEpoch.toString();
                       SharedPreferences sp =
                           await SharedPreferences.getInstance();
+                      if (!widget.isIncome) {
+                        int? val1 = int.parse(amount);
+                        val1 = (val1 - 2 * (val1));
+                        amount = val1.toString();
+                      }
                       fireStore
                           .doc(id)
-                          .set({
-                            "id": id,
-                            "userName": sp.getString("name"),
-                            "name": name,
-                            "amount": amount,
-                            "description": description,
-                          })
-                          .then((value) => Utils()
-                              .toastMessage("Data Written Successfully."))
+                          .set(
+                            {
+                              "id": id,
+                              "userName": sp.getString("name"),
+                              "name": name,
+                              "amount": amount,
+                              "description": description,
+                              "date": DateTime.now().toString(),
+                            },
+                          )
+                          .then(
+                            (value) => Utils()
+                                .toastMessage("Data Written Successfully."),
+                          )
                           .onError(
                             (error, stackTrace) {
-                              return Utils().toastMessage(error.toString());
+                              return Utils().toastMessage(
+                                error.toString(),
+                              );
                               // return showToast();
                             },
                           );

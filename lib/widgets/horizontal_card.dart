@@ -81,7 +81,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddScreen(),
+                            builder: (context) => AddScreen(isIncome : true),
                           ),
                         );
                       },
@@ -145,7 +145,7 @@ class _HorizontalCardState extends State<HorizontalCard> {
                             Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddScreen(),
+                              builder: (context) => AddScreen(isIncome : false),
                             ),
                           );
                         },

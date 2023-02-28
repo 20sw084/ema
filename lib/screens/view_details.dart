@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
 class ViewDetails extends StatefulWidget {
-  String id = '', uName = '', aName = '', aType = '', amount = '', desc = '';
+  String id = '',
+      uName = '',
+      aName = '',
+      aType = '',
+      amount = '',
+      desc = '',
+      date = '';
 
-  ViewDetails(
-      {Key? key,
-      required this.id,
-      required this.uName,
-      required this.aName,
-      required this.aType,
-      required this.amount,
-      required this.desc})
-      : super(key: key);
+  ViewDetails({
+    Key? key,
+    required this.id,
+    required this.uName,
+    required this.aName,
+    required this.aType,
+    required this.amount,
+    required this.desc,
+    required this.date,
+  }) : super(key: key);
 
   @override
   State<ViewDetails> createState() => _ViewDetailsState();
@@ -103,7 +110,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                       style: ViewDetails.ts1(context),
                     ),
                     Text(
-                        int.parse(widget.amount) > 0 ? "Income" : "Expense",
+                      int.parse(widget.amount) > 0 ? "Income" : "Expense",
                       style: ViewDetails.ts1(context),
                     ),
                   ],
@@ -131,11 +138,29 @@ class _ViewDetailsState extends State<ViewDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      "Date Time",
+                      style: ViewDetails.ts1(context),
+                    ),
+                    Text(
+                      widget.date,
+                      style: ViewDetails.ts1(context),
+                    ),
+                  ],
+                ),
+              ),
+              // TODO: time addition
+              // TODO: PIE Chart
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
                       "Description",
                       style: ViewDetails.ts1(context),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width*0.45,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: ReadMoreText(
                         widget.desc,
                         style: ViewDetails.ts1(context),
