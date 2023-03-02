@@ -16,7 +16,6 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     getName();
-    // TODO: implement initState
     super.initState();
   }
 

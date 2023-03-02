@@ -148,7 +148,6 @@ class _ViewDetailsState extends State<ViewDetails> {
                   ],
                 ),
               ),
-              // TODO: time addition
               // TODO: PIE Chart
               Padding(
                 padding: const EdgeInsets.all(8.0),

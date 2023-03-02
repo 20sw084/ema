@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:intl/intl.dart';
 import '../utils/utils.dart';
 
 
@@ -109,6 +109,9 @@ class _AddScreenState extends State<AddScreen> {
                         val1 = (val1 - 2 * (val1));
                         amount = val1.toString();
                       }
+                      DateTime now = DateTime.now();
+                      String formattedDate = DateFormat('MM-dd-yyyy HH:mm:ss').format(now);
+                      print(formattedDate);
                       fireStore
                           .doc(id)
                           .set(
@@ -118,7 +121,7 @@ class _AddScreenState extends State<AddScreen> {
                               "name": name,
                               "amount": amount,
                               "description": description,
-                              "date": DateTime.now().toString(),
+                              "date": formattedDate,
                             },
                           )
                           .then(
