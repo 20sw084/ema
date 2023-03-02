@@ -6,6 +6,7 @@ import 'package:ema/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import '../widgets/horizontal_card.dart';
+import 'chart_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -29,26 +30,28 @@ class _DashboardState extends State<Dashboard> {
     await Future.delayed(const Duration(seconds: 3));
     FlutterNativeSplash.remove();
   }
-  // child: Container(
-  // child: SfCircularChart(
-  // series: <CircularSeries>[
-  // // Render pie chart
-  // PieSeries<ChartData, String>(
-  // dataSource: chartData,
-  // pointColorMapper:(ChartData data, _) => data.color,
-  // xValueMapper: (ChartData data, _) => data.x,
-  // yValueMapper: (ChartData data, _) => data.y
-  // )
-  // ]
-  // )
-  // )
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Expense Dashboard"),
-          flexibleSpace: Icon(Icons.incomplete_circle),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.incomplete_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChartScreen(),
+                  ),
+                );
+                },
+            )
+          ],
         ),
         body: Column(
           children: <Widget>[

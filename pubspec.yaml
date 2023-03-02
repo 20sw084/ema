@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.1.2
   readmore: ^2.1.0
   intl: ^0.18.0
+  syncfusion_flutter_charts: ^20.4.52
 
 dev_dependencies:
   flutter_test:
