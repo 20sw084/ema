@@ -29,13 +29,26 @@ class _DashboardState extends State<Dashboard> {
     await Future.delayed(const Duration(seconds: 3));
     FlutterNativeSplash.remove();
   }
-
+  // child: Container(
+  // child: SfCircularChart(
+  // series: <CircularSeries>[
+  // // Render pie chart
+  // PieSeries<ChartData, String>(
+  // dataSource: chartData,
+  // pointColorMapper:(ChartData data, _) => data.color,
+  // xValueMapper: (ChartData data, _) => data.x,
+  // yValueMapper: (ChartData data, _) => data.y
+  // )
+  // ]
+  // )
+  // )
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Expense Dashboard"),
+          flexibleSpace: Icon(Icons.incomplete_circle),
         ),
         body: Column(
           children: <Widget>[

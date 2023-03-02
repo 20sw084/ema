@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
-
+// TODO: PIE Chart
 class ViewDetails extends StatefulWidget {
   String id = '',
       uName = '',
@@ -148,7 +148,6 @@ class _ViewDetailsState extends State<ViewDetails> {
                   ],
                 ),
               ),
-              // TODO: PIE Chart
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
