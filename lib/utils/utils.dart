@@ -13,4 +13,15 @@ class Utils {
         fontSize: 16.0
     );
   }
+  static TextStyle ts1(BuildContext context) {
+    return const TextStyle(
+      fontSize: 20,
+    );
+  }
+  //
+  // static TextStyle ts2(BuildContext context) {
+  //   return const TextStyle(
+  //     fontSize: 20,
+  //   );
+  // }
 }

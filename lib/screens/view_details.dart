@@ -1,3 +1,4 @@
+import 'package:ema/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 // TODO: PIE Chart
@@ -23,18 +24,6 @@ class ViewDetails extends StatefulWidget {
 
   @override
   State<ViewDetails> createState() => _ViewDetailsState();
-
-  static TextStyle ts1(BuildContext context) {
-    return const TextStyle(
-      fontSize: 20,
-    );
-  }
-
-  static TextStyle ts2(BuildContext context) {
-    return const TextStyle(
-      fontSize: 20,
-    );
-  }
 }
 
 class _ViewDetailsState extends State<ViewDetails> {
@@ -59,11 +48,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "ID",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       widget.id,
-                      style: ViewDetails.ts2(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -75,11 +64,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "User Name",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       widget.uName,
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -91,11 +80,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "Amount Name",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       widget.aName,
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -107,11 +96,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "Amount Type",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       int.parse(widget.amount) > 0 ? "Income" : "Expense",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -123,11 +112,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "Amount",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       widget.amount,
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -139,11 +128,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "Date Time",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Text(
                       widget.date,
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                   ],
                 ),
@@ -155,13 +144,13 @@ class _ViewDetailsState extends State<ViewDetails> {
                   children: [
                     Text(
                       "Description",
-                      style: ViewDetails.ts1(context),
+                      style: Utils.ts1(context),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.45,
                       child: ReadMoreText(
                         widget.desc,
-                        style: ViewDetails.ts1(context),
+                        style: Utils.ts1(context),
                         trimLines: 2,
                         trimMode: TrimMode.Line,
                       ),
