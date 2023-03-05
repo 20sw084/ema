@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../utils/utils.dart';
 
 class ChartScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class ChartScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Income",style: Utils.ts1(context),),
+              child: Text("Income", style: Utils.ts1(context),),
             ),
             Row(
               children: [
@@ -111,7 +111,7 @@ class ChartScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Expense",style: Utils.ts1(context),),
+              child: Text("Expense", style: Utils.ts1(context),),
             ),
             Container(
               child: SfCircularChart(
@@ -129,6 +129,23 @@ class ChartScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+  Future getExpenseList() async {
+    late var lst = [];
+    CollectionReference fireStore =
+    FirebaseFirestore.instance.collection("budgetTree");
+    await fireStore.get().then(
+          (res) {
+        res.docChanges.forEach((change) {
+          lst.add(change);
+          print(change.toString());
+        },);
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    return lst;
   }
 }
 
