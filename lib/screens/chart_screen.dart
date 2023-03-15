@@ -18,17 +18,17 @@ class _ChartScreenState extends State<ChartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Chart> expenseChartData = [
-      Chart('Jos Buttler', 15, Colors.pinkAccent),
-      Chart('Ben Stokes', 8, Colors.purple),
-      Chart('Joe Root', 14, Colors.green),
-      Chart('Others', 2, Colors.grey)
+    final List<Expense> expenseChartData = [
+      Expense('Jos Buttler', 15, Colors.pinkAccent),
+      Expense('Ben Stokes', 8, Colors.purple),
+      Expense('Joe Root', 14, Colors.green),
+      Expense('Others', 2, Colors.grey)
     ];
-    final List<Chart> incomeChartData = [
-      Chart('Tim David', 15, Colors.pinkAccent),
-      Chart('Rilee Roussow', 8, Colors.purple),
-      Chart('Will Jacks', 14, Colors.green),
-      Chart('Others', 2, Colors.grey)
+    final List<Expense> incomeChartData = [
+      Expense('Tim David', 15, Colors.pinkAccent),
+      Expense('Rilee Roussow', 8, Colors.purple),
+      Expense('Will Jacks', 14, Colors.green),
+      Expense('Others', 2, Colors.grey)
     ];
     // List<Color> colorList = [
     //   Color.fromRGBO(82, 98, 255, 1),
@@ -55,11 +55,11 @@ class _ChartScreenState extends State<ChartScreen> {
                   child: SfCircularChart(
                     series: <CircularSeries>[
                       // Render pie chart
-                      PieSeries<Chart, String>(
+                      PieSeries<Expense, String>(
                           dataSource: expenseChartData,
-                          pointColorMapper: (Chart data, _) => data.color,
-                          xValueMapper: (Chart data, _) => data.username,
-                          yValueMapper: (Chart data, _) => data.amount),
+                          pointColorMapper: (Expense data, _) => data.color,
+                          xValueMapper: (Expense data, _) => data.username,
+                          yValueMapper: (Expense data, _) => data.amount),
                     ],
                   ),
                 ),
@@ -133,6 +133,106 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Expense", style: Utils.ts1(context),),
+            ),
+            FutureBuilder(
+              future: getExpenseList(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  return Row(
+                    children: [
+                      Container(
+                        child: SfCircularChart(
+                          series: <CircularSeries>[
+                            // Render pie chart
+                            PieSeries<Expense, String>(
+                                // dataSource: expenseChartData,
+                                dataSource: snapshot.data,
+                                pointColorMapper: (Expense data, _) => data.color,
+                                xValueMapper: (Expense data, _) => data.username,
+                                yValueMapper: (Expense data, _) => data.amount),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                color: Colors.pink,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Pink"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                color: Colors.green,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Green"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                color: Colors.purple,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Purple"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Grey"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+                if(snapshot.hasError){
+                  return Text("Some Error going on.");
+                }
+                return CircularProgressIndicator();
+              }
+            ),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text("Expense", style: Utils.ts1(context),),
@@ -149,46 +249,46 @@ class _ChartScreenState extends State<ChartScreen> {
             //     ],
             //   ),
             // ),
-            FutureBuilder(
-                future: getExpenseList(),
-              builder: (context, snapshot) {
-                List<Widget> children = [];
-                if (snapshot.hasData) {
-                  log(snapshot.toString());
-                } else if(snapshot.hasError){
-                  children = const <Widget>[
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Error in result...'),
-                    ),
-                  ];
-                }
-                else {
-                  children = const <Widget>[
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text('Awaiting result...'),
-                    ),
-                  ];
-                }
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: children,
-                  ),
-                );
-              },
-            ),
+            // FutureBuilder(
+            //     future: getExpenseList(),
+            //   builder: (context, snapshot) {
+            //     List<Widget> children = [];
+            //     if (snapshot.hasData) {
+            //       log(snapshot.toString());
+            //     } else if(snapshot.hasError){
+            //       children = const <Widget>[
+            //         SizedBox(
+            //           width: 60,
+            //           height: 60,
+            //           child: CircularProgressIndicator(),
+            //         ),
+            //         Padding(
+            //           padding: EdgeInsets.only(top: 16),
+            //           child: Text('Error in result...'),
+            //         ),
+            //       ];
+            //     }
+            //     else {
+            //       children = const <Widget>[
+            //         SizedBox(
+            //           width: 60,
+            //           height: 60,
+            //           child: CircularProgressIndicator(),
+            //         ),
+            //         Padding(
+            //           padding: EdgeInsets.only(top: 16),
+            //           child: Text('Awaiting result...'),
+            //         ),
+            //       ];
+            //     }
+            //     return Center(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: children,
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
@@ -196,7 +296,8 @@ class _ChartScreenState extends State<ChartScreen> {
   }
 
   Future getExpenseList() async {
-    late var lst = [];
+    late List<Expense> _expense = [];
+    late List<Expense> _expenseChrt = [];
     CollectionReference fireStore =
     FirebaseFirestore.instance.collection("budgetTree");
     await fireStore.get().then(
@@ -204,15 +305,18 @@ class _ChartScreenState extends State<ChartScreen> {
         res.docChanges.forEach((change) {
           (int.parse(change.doc['amount']) > 0)
               ? null
-              : lst.add(Chart(change.doc["userName"], change.doc["amount"], Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)));
-
-          print(change.toString());
+              : _expense.add(Expense(change.doc["userName"], double.parse(change.doc["amount"]), Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)));
         },);
       },
       onError: (e) => print("Error completing: $e"),
     );
-    print(lst.toString());
-    return lst;
+
+    // for(var exp in _expense){
+    //   if(){
+    //
+    //   }
+    // }
+    return _expense;
   }
 
 

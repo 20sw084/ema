@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () async{
                 SharedPreferences sp = await SharedPreferences.getInstance();
                 sp.setString('name', name);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => Dashboard(),
