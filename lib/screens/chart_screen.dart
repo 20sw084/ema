@@ -47,7 +47,10 @@ class _ChartScreenState extends State<ChartScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Income", style: Utils.ts1(context),),
+              child: Text(
+                "Income",
+                style: Utils.ts1(context),
+              ),
             ),
             Row(
               children: [
@@ -135,104 +138,110 @@ class _ChartScreenState extends State<ChartScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Expense", style: Utils.ts1(context),),
+              child: Text(
+                "Expense",
+                style: Utils.ts1(context),
+              ),
             ),
             FutureBuilder(
-              future: getExpenseList(),
-              builder: (context, snapshot) {
-                if(snapshot.hasData){
-                  return Row(
-                    children: [
-                      Container(
-                        child: SfCircularChart(
-                          series: <CircularSeries>[
-                            // Render pie chart
-                            PieSeries<Expense, String>(
-                                // dataSource: expenseChartData,
-                                dataSource: snapshot.data,
-                                pointColorMapper: (Expense data, _) => data.color,
-                                xValueMapper: (Expense data, _) => data.username,
-                                yValueMapper: (Expense data, _) => data.amount),
+                future: getExpenseList(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Row(
+                      children: [
+                        Container(
+                          child: SfCircularChart(
+                            series: <CircularSeries>[
+                              // Render pie chart
+                              PieSeries<Expense, String>(
+                                  // dataSource: expenseChartData,
+                                  dataSource: snapshot.data,
+                                  pointColorMapper: (Expense data, _) =>
+                                      data.color,
+                                  xValueMapper: (Expense data, _) =>
+                                      data.username,
+                                  yValueMapper: (Expense data, _) =>
+                                      data.amount),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.pink,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("Pink"),
+                                // Text(snapshot.data["userName"]),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.green,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("Green"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.purple,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("Purple"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("Grey"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
                           ],
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                color: Colors.pink,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Pink"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                color: Colors.green,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Green"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                color: Colors.purple,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Purple"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Grey"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-                if(snapshot.hasError){
-                  return Text("Some Error going on.");
-                }
-                return CircularProgressIndicator();
-              }
-            ),
+                      ],
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Text("Some Error going on.");
+                  }
+                  return CircularProgressIndicator();
+                }),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text("Expense", style: Utils.ts1(context),),
@@ -298,27 +307,61 @@ class _ChartScreenState extends State<ChartScreen> {
   Future getExpenseList() async {
     late List<Expense> _expense = [];
     late List<Expense> _expenseChrt = [];
+    Set<String> users = Set();
     CollectionReference fireStore =
-    FirebaseFirestore.instance.collection("budgetTree");
+        FirebaseFirestore.instance.collection("budgetTree");
     await fireStore.get().then(
-          (res) {
-        res.docChanges.forEach((change) {
-          (int.parse(change.doc['amount']) > 0)
-              ? null
-              : _expense.add(Expense(change.doc["userName"], double.parse(change.doc["amount"]), Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)));
-        },);
+      (res) {
+        res.docChanges.forEach(
+          (change) {
+            if (int.parse(change.doc['amount']) < 0) {
+              _expense.add(
+                Expense(
+                  change.doc["userName"],
+                  double.parse(change.doc["amount"]),
+                  Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                      .withOpacity(1.0),
+                ),
+              );
+              users.add(change.doc["userName"]);
+            }
+            // (int.parse(change.doc['amount']) > 0)
+            //     ? null
+            //     : _expense.add(
+            //   Expense(
+            //     change.doc["userName"],
+            //     double.parse(change.doc["amount"]),
+            //     Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+            //         .withOpacity(1.0),
+            //   ),
+            // );
+          },
+        );
       },
       onError: (e) => print("Error completing: $e"),
     );
 
-    // for(var exp in _expense){
-    //   if(){
-    //
-    //   }
-    // }
-    return _expense;
-  }
+    users.forEach((element) {
+      _expenseChrt.add(Expense(
+        element,
+        0,
+        Color(
+          (math.Random().nextDouble() * 0xFFFFFF).toInt(),
+        ).withOpacity(1.0),
+      ));
+    });
 
+
+    for(var exp in _expense){
+      for(var expCh in _expenseChrt){
+        if(exp.username == expCh.username){
+          expCh.amount += exp.amount;
+        }
+      }
+    }
+
+    return _expenseChrt;
+  }
 
 // Map<String, String> getUserData() {
 //   Map<String, String> catMap = {};
@@ -335,5 +378,3 @@ class _ChartScreenState extends State<ChartScreen> {
 //   return catMap;
 // }
 }
-
-
