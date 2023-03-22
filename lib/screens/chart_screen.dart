@@ -12,6 +12,9 @@ class ChartScreen extends StatefulWidget {
   @override
   State<ChartScreen> createState() => _ChartScreenState();
 }
+// Expense Chart Works
+// TODO: Only show statistics of top 3 else others.
+// TODO: Color Should be matched with color identification section.
 
 class _ChartScreenState extends State<ChartScreen> {
   // late List<Chart> _expense = [];
