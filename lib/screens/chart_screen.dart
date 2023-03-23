@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -5,6 +7,7 @@ import '../models/chart.dart';
 import '../utils/utils.dart';
 import 'dart:math' as math;
 import 'dart:developer';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class ChartScreen extends StatefulWidget {
   const ChartScreen({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class ChartScreen extends StatefulWidget {
 // Expense Chart Works
 // TODO: Only show statistics of top 3 else others.
 // TODO: Color Should be matched with color identification section.
-
+// TODO: Pass Color to object via Firebase Data Snapshot
 class _ChartScreenState extends State<ChartScreen> {
   // late List<Chart> _expense = [];
 
@@ -354,7 +357,6 @@ class _ChartScreenState extends State<ChartScreen> {
       ));
     });
 
-
     for(var exp in _expense){
       for(var expCh in _expenseChrt){
         if(exp.username == expCh.username){
@@ -363,21 +365,44 @@ class _ChartScreenState extends State<ChartScreen> {
       }
     }
 
-    return _expenseChrt;
-  }
+    // Income de rh h
+    // _expenseChrt.sort((a, b) => b.amount.compareTo(a.amount));
 
-// Map<String, String> getUserData() {
-//   Map<String, String> catMap = {};
-//   for (var item in _expense) {
-//     print(item.username);
-//     if (catMap.containsKey(item.username) == false) {
-//       catMap[item.username] = 1;
-//     } else {
-//       catMap.update(item.username, (int) => catMap[item.username]! + 1);
-//       // test[item.category] = test[item.category]! + 1;
-//     }
-//     print(catMap);
-//   }
-//   return catMap;
-// }
+
+    _expenseChrt.sortReversed((a, b) => b.amount.compareTo(a.amount));
+
+
+
+// FOr Income
+    // if(_expenseChrt.length > 3){
+    //   for(var i = 0; i < _expenseChrt.length; i++){
+    //     if (i > 3){
+    //       _expenseChrt.elementAt(3).amount += _expenseChrt.elementAt(i).amount;
+    //       _expenseChrt.elementAt(3).username = 'Others';
+    //       _expenseChrt.insert(i, new Expense("", 0, Colors.pinkAccent));
+    //     }
+    //   }
+    // }
+
+    if(_expenseChrt.length > 3){
+      for(var i = 0; i < _expenseChrt.length; i++){
+        if (i > 3){
+          _expenseChrt.elementAt(3).amount += _expenseChrt.elementAt(i).amount;
+          _expenseChrt.elementAt(3).username = 'Others';
+        }
+      }
+    }
+
+    if(_expenseChrt.length>3){
+      _expense = [];
+      for(var i = 0; i < 4; i++){
+        _expense.add(_expenseChrt.elementAt(i));
+      }
+    }
+    else{
+      _expense = _expenseChrt;
+    }
+    _expenseChrt = [];
+    return _expense;
+  }
 }

@@ -45,6 +45,7 @@ dependencies:
   readmore: ^2.1.0
   intl: ^0.18.0
   syncfusion_flutter_charts: ^20.4.52
+  fast_immutable_collections: ^9.0.0
 
 dev_dependencies:
   flutter_test:
