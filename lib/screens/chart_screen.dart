@@ -383,24 +383,18 @@ class _ChartScreenState extends State<ChartScreen> {
     //     }
     //   }
     // }
-
+    _expense = [];
     if(_expenseChrt.length > 3){
       for(var i = 0; i < _expenseChrt.length; i++){
         if (i > 3){
           _expenseChrt.elementAt(3).amount += _expenseChrt.elementAt(i).amount;
           _expenseChrt.elementAt(3).username = 'Others';
+          _expense.insert(3, _expenseChrt.elementAt(3));
+        }
+        else{
+          _expense.add(_expenseChrt.elementAt(i));
         }
       }
-    }
-
-    if(_expenseChrt.length>3){
-      _expense = [];
-      for(var i = 0; i < 4; i++){
-        _expense.add(_expenseChrt.elementAt(i));
-      }
-    }
-    else{
-      _expense = _expenseChrt;
     }
     _expenseChrt = [];
     return _expense;
