@@ -21,38 +21,53 @@ class _ChartScreenState extends State<ChartScreen> {
   // late List<Chart> _expense = [];
   List<Color> colorList = [
     Colors.blue,
-    Colors.greenAccent,
     Colors.purple,
+    Colors.teal,
+    Colors.brown,
+    Colors.black,
+    Colors.greenAccent,
+    Colors.green,
+    Colors.yellow,
+    Colors.deepOrangeAccent,
+    Colors.lime,
     Colors.red,
     Colors.grey,
-    Colors.green,
     Colors.pinkAccent,
-    Colors.yellow,
-    Colors.brown,
-    Colors.deepOrangeAccent,
-    Colors.teal,
-    Colors.lime,
-    Colors.black
+    Colors.pink,
+    // Colors.transparent,
+    Colors.indigo,
+    Colors.amber,
+    Colors.redAccent,
+    Colors.purpleAccent,
+    Colors.deepPurpleAccent,
+    Colors.indigoAccent,
+    Colors.blueAccent,
+    Colors.lightBlueAccent,
+    Colors.cyanAccent,
+    Colors.tealAccent,
+    Colors.greenAccent,
+    Colors.lightGreenAccent,
+    Colors.limeAccent,
   ];
   @override
   Widget build(BuildContext context) {
-    final List<Expense> expenseChartData = [
-      Expense('Jos Buttler', 15, Colors.pinkAccent),
-      Expense('Ben Stokes', 8, Colors.purple),
-      Expense('Joe Root', 14, Colors.green),
-      Expense('Others', 2, Colors.grey)
-    ];
-    final List<Expense> incomeChartData = [
-      Expense('Tim David', 15, Colors.pinkAccent),
-      Expense('Rilee Roussow', 8, Colors.purple),
-      Expense('Will Jacks', 14, Colors.green),
-      Expense('Others', 2, Colors.grey)
-    ];
+    // final List<Expense> expenseChartData = [
+    //   Expense('Jos Buttler', 15, Colors.pinkAccent),
+    //   Expense('Ben Stokes', 8, Colors.purple),
+    //   Expense('Joe Root', 14, Colors.green),
+    //   Expense('Others', 2, Colors.grey)
+    // ];
+    // final List<Expense> incomeChartData = [
+    //   Expense('Tim David', 15, Colors.pinkAccent),
+    //   Expense('Rilee Roussow', 8, Colors.purple),
+    //   Expense('Will Jacks', 14, Colors.green),
+    //   Expense('Others', 2, Colors.grey)
+    // ];
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Charts"),
+          title: const Text("Charts"),
         ),
         body: Column(
           children: [
