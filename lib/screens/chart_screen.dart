@@ -15,7 +15,6 @@ class ChartScreen extends StatefulWidget {
 }
 
 // Expense Chart Works
-// TODO: Exception caught when users less than 4
 
 class _ChartScreenState extends State<ChartScreen> {
   // late List<Chart> _expense = [];
@@ -272,11 +271,13 @@ class _ChartScreenState extends State<ChartScreen> {
                 future: getExpenseList(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    // if(snapshot.data.length){}
                     return Row(
                       children: [
                         Container(
                           child: SfCircularChart(
                             series: <CircularSeries>[
+                              // TODO: Exception caught when users less than 4. chrt not working < 4
                               // Render pie chart
                               PieSeries<Expense, String>(
                                   // dataSource: expenseChartData,
@@ -297,12 +298,12 @@ class _ChartScreenState extends State<ChartScreen> {
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  color: snapshot.data[0].color,
+                                  color: snapshot.data[0].color ?? Colors.transparent,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(snapshot.data[0].username),
+                                Text(snapshot.data[0].username ?? " "),
                                 // Text(snapshot.data["userName"]),
                               ],
                             ),
@@ -314,12 +315,12 @@ class _ChartScreenState extends State<ChartScreen> {
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  color: snapshot.data[1].color,
+                                  color: snapshot.data[1].color ?? Colors.transparent,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(snapshot.data[1].username),
+                                Text(snapshot.data[1].username ?? " "),
                               ],
                             ),
                             SizedBox(
@@ -330,12 +331,12 @@ class _ChartScreenState extends State<ChartScreen> {
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  color: snapshot.data[2].color,
+                                  color: snapshot.data[2].color ?? Colors.transparent,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(snapshot.data[2].username),
+                                Text(snapshot.data[2].username ?? " "),
                               ],
                             ),
                             SizedBox(
@@ -346,12 +347,12 @@ class _ChartScreenState extends State<ChartScreen> {
                                 Container(
                                   height: 20,
                                   width: 20,
-                                  color: snapshot.data[3].color,
+                                  color: snapshot.data[3].color ?? Colors.transparent,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(snapshot.data[3].username),
+                                Text(snapshot.data[3].username ?? " "),
                               ],
                             ),
                             SizedBox(
@@ -360,7 +361,7 @@ class _ChartScreenState extends State<ChartScreen> {
                           ],
                         ),
                       ],
-                    );
+                    ) ?? Text("Not Enough dt");
                   }
                   if (snapshot.hasError) {
                     return Text("Some Error going on.");
